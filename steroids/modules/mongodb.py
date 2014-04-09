@@ -34,7 +34,7 @@ def install(basepath, name):
 # -*- coding=utf-8 -*-
 
 from pymongo import Connection
-from pymongo.objectid import ObjectId
+from bson.objectid import ObjectId
 import json
 
 
@@ -63,7 +63,7 @@ class Master(object):
         
         dictionary = self.__dict__()
         
-        existing_dictionary = self._database[self._collection].find_one( { "_id" : ObjectId(self.id) } )
+        existing_dictionary = self._database[self._collection].find_one( { "_id" : self.id } )
         if existing_dictionary:
             existing_dictionary.update(dictionary)
         else:
@@ -77,7 +77,7 @@ class Master(object):
             Delete the object in the database
         \"""
         
-        existing_dictionary = self._database[self._collection].remove( { "_id" : ObjectId(self.id) } )
+        existing_dictionary = self._database[self._collection].remove( { "_id" : self.id } )
         self = None
 
     def load(self, oid=None):
@@ -89,7 +89,7 @@ class Master(object):
         if not oid:
             raise Exception("No ID specified")
 
-        return self.load_by_query( { "_id" : ObjectId(oid) } )
+        return self.load_by_query( { "_id" : oid } )
         
     def load_by_query(self, query):
         \"""
@@ -178,7 +178,7 @@ def install_examples(basepath, name):
     example_file.write("""#!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-from pymongo.objectid import ObjectId
+from bson.objectid import ObjectId
 from %s.objects.Master import Master
 
 class Example(Master):

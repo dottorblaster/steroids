@@ -6,7 +6,7 @@ __help__ = """Google App Engine (gae)
 To use Google App Engine correctly with other modules ( ex: flask ) you 
 should use this command to install everything in your working directory:
 
-sudo pip install -U -r requirements.txt -t $PWD/modules
+  sudo pip install -U -r requirements.txt -t $PWD/modules
 
 This command will download and install all everything gae needs into the
 current directory.
@@ -39,11 +39,17 @@ def install(basepath, name):
 version: 1
 runtime: python27
 api_version: 1
-threadsafe: yes
+threadsafe: false
 
 handlers:
 - url: .*
   script: gae.py
+
+# Remember to install everything inside ./modules/
+#   pip install -U -r requirements.txt -t $PWD/modules
+# And then
+#   pip install -U -r requirements.txt
+
 """ % name)
     gae_yaml_file.close()
 
